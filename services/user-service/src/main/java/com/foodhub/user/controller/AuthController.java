@@ -11,6 +11,8 @@ import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,5 +54,11 @@ public class AuthController {
         User u = found.get();
         String token = jwt.createToken(u.getId(), u.getEmail(), u.getRole());
         return ResponseEntity.ok(Map.of("token", token, "type", "Bearer"));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> me(Authentication auth) {
+        return ResponseEntity.ok(Map.of("email", auth.getName(),
+                "roles", auth.getAuthorities().toString()));
     }
 }

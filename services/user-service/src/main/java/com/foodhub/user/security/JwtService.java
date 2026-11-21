@@ -1,11 +1,14 @@
 package com.foodhub.user.security;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Optional;
 import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -32,5 +35,14 @@ public class JwtService {
                 .expiration(Date.from(now.plus(expiryMinutes, ChronoUnit.MINUTES)))
                 .signWith(key)
                 .compact();
+    }
+
+    public Optional<Claims> parse(String token) {
+        try {
+            return Optional.of(Jwts.parser().verifyWith(key).build()
+                    .parseSignedClaims(token).getPayload());
+        } catch (JwtException | IllegalArgumentException e) {
+            return Optional.empty();
+        }
     }
 }
