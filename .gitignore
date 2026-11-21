@@ -1,0 +1,27 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+crash.log
+
+# Secrets and credentials
+.env
+.env.*
+*.pem
+*.key
+*credentials*
+.aws/
+
+# Java / Maven
+target/
+
+# Node / React
+node_modules/
+build/
+dist/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
