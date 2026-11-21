@@ -20,7 +20,7 @@ public class SecurityConfig {
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/health", "/health/**", "/metrics").permitAll()
+                .requestMatchers("/health", "/health/**", "/metrics", "/error").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/menu", "/api/menu/**").permitAll()
                 .anyRequest().authenticated())
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
