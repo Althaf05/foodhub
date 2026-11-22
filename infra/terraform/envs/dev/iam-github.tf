@@ -41,3 +41,32 @@ resource "aws_iam_role" "github_ci" {
 output "github_ci_role_arn" {
   value = aws_iam_role.github_ci.arn
 }
+
+data "aws_iam_policy_document" "github_ci_ecr" {
+  statement {
+    sid       = "EcrLogin"
+    actions   = ["ecr:GetAuthorizationToken"]
+    resources = ["*"]
+  }
+
+  statement {
+    sid = "EcrPush"
+    actions = [
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:InitiateLayerUpload",
+      "ecr:UploadLayerPart",
+      "ecr:CompleteLayerUpload",
+      "ecr:PutImage",
+      "ecr:BatchGetImage",
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:DescribeImages",
+    ]
+    resources = [for r in aws_ecr_repository.app : r.arn]
+  }
+}
+
+resource "aws_iam_role_policy" "github_ci_ecr" {
+  name   = "ecr-push"
+  role   = aws_iam_role.github_ci.id
+  policy = data.aws_iam_policy_document.github_ci_ecr.json
+}
