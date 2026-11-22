@@ -1,0 +1,8 @@
+title = "foodhub gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "SonarCloud project key is a public identifier, not a secret"
+paths = ['''sonar-project\.properties''']
