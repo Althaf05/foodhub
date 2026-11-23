@@ -26,6 +26,8 @@ data "aws_iam_policy_document" "github_trust" {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
       values = [
+        "repo:Althaf05@105469451/foodhub@1466107424:ref:refs/heads/main",
+        "repo:Althaf05@105469451/foodhub@1466107424:pull_request",
         "repo:${local.github_repo}:ref:refs/heads/main",
         "repo:${local.github_repo}:pull_request",
       ]
