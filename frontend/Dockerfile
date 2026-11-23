@@ -6,11 +6,13 @@ RUN npm ci --ignore-scripts
 COPY . .
 RUN npm run build
 
-# Stage 2: serve with non-root Nginx
-FROM nginxinc/nginx-unprivileged:stable-alpine
-USER root
-RUN apk upgrade --no-cache
-USER 101
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Stage 2: Alpine's own nginx, patched, running as non-root
+FROM alpine:3.24
+RUN apk add --no-cache nginx \
+ && mkdir -p /run/nginx /var/lib/nginx/tmp /var/log/nginx \
+ && chown -R nginx:nginx /run/nginx /var/lib/nginx /var/log/nginx
+COPY nginx.conf /etc/nginx/http.d/default.conf
 COPY --from=build /app/dist /usr/share/nginx/html
+USER nginx
 EXPOSE 8080
+CMD ["nginx", "-g", "daemon off; pid /tmp/nginx.pid; error_log /dev/stderr;"]
