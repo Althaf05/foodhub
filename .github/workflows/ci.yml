@@ -83,3 +83,31 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@2f77a1ec69fb1d595b06f35ab27e97605bdef703 # v5.3.2
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  build-scan:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: user-service
+            context: services/user-service
+          - name: menu-service
+            context: services/menu-service
+          - name: order-service
+            context: services/order-service
+          - name: frontend
+            context: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t foodhub/${{ matrix.name }}:${{ github.sha }} ${{ matrix.context }}
+
+      - name: Trivy scan
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: foodhub/${{ matrix.name }}:${{ github.sha }}
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: "1"
