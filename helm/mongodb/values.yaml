@@ -1,0 +1,9 @@
+image: mongo:7
+storageClass: gp3
+storageSize: 5Gi
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    memory: 512Mi
