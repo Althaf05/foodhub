@@ -1,0 +1,9 @@
+nameOverride: menu-service
+image:
+  repository: 905905585634.dkr.ecr.ap-south-1.amazonaws.com/foodhub/menu-service
+  tag: "REPLACE_WITH_SHA"
+port: 8082
+env:
+  - name: MONGODB_URI
+    value: mongodb://mongodb:27017/foodhub
+envFromSecret: foodhub-jwt

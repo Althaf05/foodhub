@@ -3,3 +3,7 @@ image:
   repository: 905905585634.dkr.ecr.ap-south-1.amazonaws.com/foodhub/user-service
   tag: "REPLACE_WITH_SHA"
 port: 8081
+env:
+  - name: MONGODB_URI
+    value: mongodb://mongodb:27017/foodhub
+envFromSecret: foodhub-jwt
