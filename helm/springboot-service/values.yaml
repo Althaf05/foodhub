@@ -1,0 +1,25 @@
+nameOverride: ""
+
+image:
+  repository: ""
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+port: 8080
+
+replicaCount: 2
+
+env: []
+
+envFromSecret: ""
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    memory: 512Mi
+
+probes:
+  path: /health
+  initialDelaySeconds: 30
