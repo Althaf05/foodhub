@@ -1,7 +1,7 @@
 nameOverride: order-service
 image:
   repository: 905905585634.dkr.ecr.ap-south-1.amazonaws.com/foodhub/order-service
-  tag: "2fdbd3f95380a4215f2e8629c4dc28a533899422"
+  tag: "9c361fc1b83166078fe8db673feca641b7866b4a"
 port: 8083
 env:
   - name: MONGODB_URI
