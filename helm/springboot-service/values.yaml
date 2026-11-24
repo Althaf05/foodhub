@@ -25,3 +25,7 @@ resources:
 probes:
   path: /health
   initialDelaySeconds: 30
+
+rollout:
+  enabled: true
+  pauseSeconds: 30
