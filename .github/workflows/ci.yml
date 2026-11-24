@@ -3,6 +3,8 @@ name: CI
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'helm/**'
   pull_request:
 
 permissions:
@@ -151,3 +153,28 @@ jobs:
           IMAGE=$REGISTRY/foodhub/${{ matrix.name }}:${{ github.sha }}
           docker build -t "$IMAGE" ${{ matrix.context }}
           docker push "$IMAGE"
+
+  update-tags:
+    needs: [push-ecr]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update image tags in helm values
+        run: |
+          for f in helm/user-service helm/menu-service helm/order-service helm/frontend; do
+            sed -i "s|^\(  tag: \).*|\1\"${{ github.sha }}\"|" $f/values.yaml
+          done
+          git diff --stat
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add helm
+          git diff --cached --quiet && echo "no changes" && exit 0
+          git commit -m "chore(helm): deploy ${{ github.sha }} [skip ci]"
+          git push
