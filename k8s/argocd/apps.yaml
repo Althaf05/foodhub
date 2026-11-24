@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: mongodb
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
@@ -24,6 +26,8 @@ kind: Application
 metadata:
   name: user-service
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
@@ -46,6 +50,8 @@ kind: Application
 metadata:
   name: menu-service
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
@@ -68,6 +74,8 @@ kind: Application
 metadata:
   name: order-service
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
@@ -90,6 +98,8 @@ kind: Application
 metadata:
   name: frontend
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
