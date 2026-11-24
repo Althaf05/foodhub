@@ -177,4 +177,8 @@ jobs:
           git add helm
           git diff --cached --quiet && echo "no changes" && exit 0
           git commit -m "chore(helm): deploy ${{ github.sha }} [skip ci]"
-          git push
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push && exit 0
+            sleep 3
+          done
+          exit 1
