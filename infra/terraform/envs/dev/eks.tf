@@ -28,8 +28,8 @@ module "eks" {
       capacity_type  = "SPOT"
       instance_types = ["m7i-flex.large", "c7i-flex.large"]
       min_size       = 2
-      max_size       = 4
-      desired_size   = 2
+      max_size       = 5
+      desired_size   = 3
     }
   }
 }
