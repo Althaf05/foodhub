@@ -1,0 +1,25 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: foodhub-alerts
+  namespace: monitoring
+  labels:
+    release: monitoring
+spec:
+  groups:
+    - name: foodhub
+      rules:
+        - alert: FoodhubServiceDown
+          expr: up{namespace="foodhub"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "{{ $labels.service }} target is down"
+        - alert: FoodhubTestAlert
+          expr: vector(1)
+          for: 1m
+          labels:
+            severity: info
+          annotations:
+            summary: "Test alert: Alertmanager to Slack works"
