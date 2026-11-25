@@ -1,0 +1,42 @@
+prometheus:
+  prometheusSpec:
+    retention: 6h
+    replicas: 1
+    resources:
+      requests: { cpu: 100m, memory: 400Mi }
+      limits: { memory: 800Mi }
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: gp3
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 5Gi
+alertmanager:
+  alertmanagerSpec:
+    replicas: 1
+    resources:
+      requests: { cpu: 10m, memory: 50Mi }
+      limits: { memory: 150Mi }
+grafana:
+  replicas: 1
+  resources:
+    requests: { cpu: 50m, memory: 256Mi }
+    limits: { memory: 512Mi }
+  persistence:
+    enabled: false
+kubeStateMetrics:
+  enabled: true
+nodeExporter:
+  enabled: true
+kubeEtcd:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeProxy:
+  enabled: false
