@@ -4,7 +4,10 @@ data "aws_iam_policy_document" "eso_read_jwt" {
       "secretsmanager:GetSecretValue",
       "secretsmanager:DescribeSecret",
     ]
-    resources = ["arn:aws:secretsmanager:ap-south-1:${data.aws_caller_identity.current.account_id}:secret:foodhub/jwt-*"]
+    resources = [
+      "arn:aws:secretsmanager:ap-south-1:${data.aws_caller_identity.current.account_id}:secret:foodhub/jwt-*",
+      "arn:aws:secretsmanager:ap-south-1:${data.aws_caller_identity.current.account_id}:secret:foodhub/slack-webhook-*",
+    ]
   }
 }
 
