@@ -1,0 +1,22 @@
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
+metadata:
+  name: foodhub-pod-standards
+spec:
+  validationActions: ["Audit"]
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["pods"]
+  matchConditions:
+    - name: foodhub-only
+      expression: "object.metadata.namespace == 'foodhub'"
+  validations:
+    - message: "Pods must set runAsNonRoot: true."
+      expression: "has(object.spec.securityContext) && has(object.spec.securityContext.runAsNonRoot) && object.spec.securityContext.runAsNonRoot == true"
+    - message: "Containers must set a memory limit."
+      expression: "object.spec.containers.all(c, has(c.resources) && has(c.resources.limits) && 'memory' in c.resources.limits)"
+    - message: "Image tag 'latest' is not allowed."
+      expression: "object.spec.containers.all(c, !c.image.endsWith(':latest'))"
