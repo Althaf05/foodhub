@@ -16,10 +16,3 @@ spec:
             severity: critical
           annotations:
             summary: "{{ $labels.service }} target is down"
-        - alert: FoodhubTestAlert
-          expr: vector(1)
-          for: 1m
-          labels:
-            severity: info
-          annotations:
-            summary: "Test alert: Alertmanager to Slack works"
