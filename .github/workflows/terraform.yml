@@ -1,0 +1,46 @@
+name: Terraform
+
+on:
+  pull_request:
+    paths:
+      - 'infra/terraform/**'
+      - '.github/workflows/terraform.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        dir: [infra/terraform/bootstrap, infra/terraform/envs/dev]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.10.5"
+
+      - name: fmt
+        run: terraform fmt -check -recursive
+        working-directory: ${{ matrix.dir }}
+
+      - name: init (no backend)
+        run: terraform init -backend=false -input=false
+        working-directory: ${{ matrix.dir }}
+
+      - name: validate
+        run: terraform validate
+        working-directory: ${{ matrix.dir }}
+
+  checkov:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install and run Checkov
+        run: |
+          pip install --quiet checkov
+          checkov -d infra/terraform --framework terraform --compact --quiet
