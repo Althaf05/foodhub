@@ -1,7 +1,7 @@
 nameOverride: menu-service
 image:
   repository: 905905585634.dkr.ecr.ap-south-1.amazonaws.com/foodhub/menu-service
-  tag: "106fac4ec3e7f9b151d3d5eb678834f0d35575c6"
+  tag: "5fba5f6655837cfc7efff5c7cb9237736113fae6"
 port: 8082
 env:
   - name: MONGODB_URI
