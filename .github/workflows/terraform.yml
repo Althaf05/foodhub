@@ -42,5 +42,5 @@ jobs:
 
       - name: Install and run Checkov
         run: |
-          pip install --quiet --only-binary :all: checkov
+          pip install --quiet --only-binary :all: checkov==3.4.11
           checkov -d infra/terraform --framework terraform --compact --quiet
