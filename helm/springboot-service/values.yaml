@@ -29,3 +29,9 @@ probes:
 rollout:
   enabled: true
   pauseSeconds: 30
+
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 4
+  cpuTarget: 60
