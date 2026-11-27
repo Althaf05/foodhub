@@ -1,6 +1,6 @@
 image:
   repository: 905905585634.dkr.ecr.ap-south-1.amazonaws.com/foodhub/frontend
-  tag: "b7c973a600de3cb1fe48a0d62d3eedbdfc33cabf"
+  tag: "d01650913fd7ff7206a08e43d69d597526bee96b"
   pullPolicy: IfNotPresent
 port: 8080
 replicaCount: 2
