@@ -13,3 +13,4 @@ NEVER run a plain `terraform destroy`: it also deletes ECR and the CI role.
 4. Targeted destroy (from infra/terraform/envs/dev):
    terraform destroy -target=module.eks -target=aws_eks_addon.ebs_csi -target=module.ebs_csi_irsa -target=module.alb_controller_irsa -target=module.eso_irsa -target=module.cluster_autoscaler_irsa -target=module.vpc
 5. Verify all empty: eks list-clusters, NAT gateways, Elastic IPs, EBS volumes, load balancers, VPCs.
+
