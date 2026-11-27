@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: hashicorp/setup-terraform@v3
+      - uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3.1.2
         with:
           terraform_version: "1.10.5"
 
@@ -42,5 +42,5 @@ jobs:
 
       - name: Install and run Checkov
         run: |
-          pip install --quiet checkov
+          pip install --quiet --only-binary :all: checkov
           checkov -d infra/terraform --framework terraform --compact --quiet
