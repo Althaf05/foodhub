@@ -6,6 +6,11 @@ locals {
 
 resource "aws_s3_bucket" "tfstate" {
   bucket = local.bucket_name
+  #checkov:skip=CKV_AWS_144:Single-region learning project; replication costs extra
+  #checkov:skip=CKV_AWS_18:Access logging needs a second bucket; deferred to keep cost near zero
+  #checkov:skip=CKV_AWS_145:SSE-S3 (AES256) used; KMS key costs money
+  #checkov:skip=CKV2_AWS_61:State must be retained; versioning enabled
+  #checkov:skip=CKV2_AWS_62:No event consumers for the state bucket
 
   tags = {
     Project   = "foodhub"

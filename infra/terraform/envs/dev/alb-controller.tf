@@ -1,4 +1,5 @@
 module "alb_controller_irsa" {
+  #checkov:skip=CKV_TF_1:Registry module pinned by version constraint
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts"
   version = "~> 6.0"
 

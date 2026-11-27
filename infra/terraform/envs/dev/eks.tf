@@ -1,4 +1,5 @@
 module "eks" {
+  #checkov:skip=CKV_TF_1:Registry module pinned by version constraint
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 21.0"
 

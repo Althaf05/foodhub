@@ -4,6 +4,7 @@ locals {
 }
 
 module "vpc" {
+  #checkov:skip=CKV_TF_1:Registry module pinned by version constraint
   source  = "terraform-aws-modules/vpc/aws"
   version = "~> 6.0"
 
