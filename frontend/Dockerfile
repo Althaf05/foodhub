@@ -1,5 +1,5 @@
 # Stage 1: build the static files
-FROM node:20-alpine AS build
+FROM node:26-alpine AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci --ignore-scripts
