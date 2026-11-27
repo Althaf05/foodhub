@@ -1,7 +1,7 @@
 nameOverride: user-service
 image:
   repository: 905905585634.dkr.ecr.ap-south-1.amazonaws.com/foodhub/user-service
-  tag: "d01650913fd7ff7206a08e43d69d597526bee96b"
+  tag: "953023a28df24369aca7d32478801f65af4cf3ee"
 port: 8081
 env:
   - name: MONGODB_URI
