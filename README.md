@@ -383,23 +383,4 @@ aws secretsmanager delete-secret --secret-id foodhub/slack-webhook --force-delet
 
 ---
 
-## 11. Design decisions, known gaps and lessons learned
-
-### Design decisions
-- **GitOps boundary:** CI builds and commits an image tag; ArgoCD pulls and deploys. CI holds no cluster credentials.
-- **Destroy-after-use infrastructure:** ECR, the CI role and secrets persist; the expensive layer is rebuilt each session.
-- **One shared Helm chart** for the three Spring Boot services, with a values file each.
-- **Tags by commit SHA** with immutable ECR tags, so every deployment is traceable.
-
-### Known gaps (honest list)
-- MongoDB has no authentication; network policies restrict access.
-- Canary is replica-based, with no ALB traffic weighting or metric-based auto-abort.
-- Any logged-in user can add menu items (no admin role); order prices come from the client.
-- Network policies and Kyverno are applied manually and Kyverno runs in Audit mode.
-- HTTP only; no domain, TLS or CDN. One NAT gateway is a single point of failure.
-- `main` accepts direct pushes because the CI bot commits image tags to it.
-- Secrets Manager entries are created with the CLI, not Terraform.
-- Merged but not yet applied: ECR KMS encryption (applying replaces the repos and empties them, so rebuild images afterwards).
-
-
 Full troubleshooting table: [docs/runbook.md](docs/runbook.md).
