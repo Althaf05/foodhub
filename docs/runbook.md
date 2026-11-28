@@ -34,6 +34,6 @@ Always `git pull --rebase` before pushing (the bot commits to main).
 - Mongo has no auth (network policies restrict access).
 - Canary is replica-based (no ALB weighting, no metric-based abort).
 - ECR KMS change merged but not applied.
-- Cluster Autoscaler installed, scale-up not verified.
+- Cluster Autoscaler: scale-up tested.
 - Kyverno in Audit mode.
 - Secrets Manager entries are created by CLI, not Terraform.
