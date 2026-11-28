@@ -88,7 +88,7 @@ CI never runs kubectl and holds no cluster credentials. Pull requests skip the E
 flowchart TB
   ALB[AWS ALB] --> ING[Ingress, AWS Load Balancer Controller]
   subgraph NS[namespace foodhub]
-    ING --> SVCF[Service frontend]
+    ING --> SVCF[Service frontend, plain Deployment]
     SVCF --> FEP[frontend pods]
     FEP --> SVCU[Service user-service]
     FEP --> SVCM[Service menu-service]
@@ -109,8 +109,8 @@ flowchart TB
   ESO[External Secrets Operator] -->|creates| SEC
   SM[AWS Secrets Manager] --> ESO
   CA[Cluster Autoscaler] --> NG[Spot node group, 2 to 5 nodes]
-  NP[NetworkPolicies: default deny + allow rules]
-  KY[Kyverno policies, Audit mode]
+  NP[NetworkPolicies: default deny + allow rules, applied manually in Phase 8]
+  KY[Kyverno policies, Audit mode, applied manually in Phase 8]
 ```
 
 Config comes from env vars in Helm values, so there are no ConfigMaps. Pods run non-root with dropped capabilities.
@@ -129,7 +129,6 @@ flowchart LR
     LOKI --> GRAF
   end
   AM -->|webhook from Secrets Manager via ESO| SLACK[Slack]
-  CW[CloudWatch: EKS control-plane logs, unverified]
 ```
 
 Metrics and logs for the services and nodes go to Prometheus and Loki, not CloudWatch. MongoDB has no exporter, so database metrics aren't collected.
